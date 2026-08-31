@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-charcoal-200;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-warm-50 text-charcoal-900 font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  [dir="rtl"] {
+    font-family: '"Noto Kufi Arabic"', system-ui, sans-serif;
+  }
+
+  [dir="ltr"] {
+    font-family: 'Inter', '"Noto Sans Hebrew"', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-gold-200 text-charcoal-900;
+  }
+}
+
+@layer components {
+  .container-luxury {
+    @apply max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-charcoal-900 text-warm-50 font-semibold tracking-wide rounded-lg transition-all duration-300 hover:bg-charcoal-800 hover:shadow-xl active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-charcoal-900 font-semibold tracking-wide rounded-lg border-2 border-charcoal-900 transition-all duration-300 hover:bg-charcoal-900 hover:text-warm-50 active:scale-[0.98];
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-400 text-charcoal-900 font-semibold tracking-wide rounded-lg transition-all duration-300 hover:bg-gold-500 hover:shadow-xl active:scale-[0.98];
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] text-white font-semibold rounded-lg transition-all duration-300 hover:bg-[#1da851] hover:shadow-lg active:scale-[0.98];
+  }
+
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+
+  .heading-eyebrow {
+    @apply text-gold-500 text-sm font-semibold uppercase tracking-[0.2em] mb-4;
+  }
+
+  .card-luxury {
+    @apply bg-white rounded-2xl overflow-hidden shadow-[0_2px_20px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)];
+  }
+
+  .input-luxury {
+    @apply w-full px-4 py-3 bg-warm-50 border border-charcoal-200 rounded-lg text-charcoal-900 placeholder-charcoal-400 transition-all duration-200 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
