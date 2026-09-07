@@ -29,19 +29,26 @@ export function BrandLockup({
   return (
     <Link
       href="/"
-      className="group flex items-center gap-2 sm:gap-3"
+      className="group flex items-center gap-2.5 sm:gap-3.5"
       dir="ltr"
       aria-label={brandName}
     >
+      {/* التحكم بحجم صورة اللوجو */}
       <Image
         src={logoUrl}
         alt={brandName}
-        width={compact ? 40 : 48}
-        height={compact ? 40 : 48}
-        className={`${compact ? 'h-9 w-9' : 'h-10 w-10 sm:h-11 sm:w-11'} object-contain`}
+        width={compact ? 56 : 64}
+        height={compact ? 56 : 64}
+        className={`${
+          compact ? 'h-11 w-auto sm:h-12' : 'h-12 w-auto sm:h-14'
+        } object-contain transition-transform duration-300 group-hover:scale-105`}
         priority={priority}
       />
-      <span className={`text-lg font-bold tracking-tight sm:text-xl ${textClass}`}>
+
+      {/* التحكم بحجم وتنسيق الاسم المكتوب بجانب اللوجو */}
+      <span
+        className={`text-xl font-bold tracking-tight sm:text-2xl ${textClass}`}
+      >
         {brandName}
       </span>
     </Link>

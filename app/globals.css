@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+
+* {
+  font-family: 'Cairo', sans-serif !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,9 +16,10 @@
     scroll-behavior: smooth;
   }
 
-  body {
-    @apply bg-warm-50 text-charcoal-900 font-sans antialiased;
+  body main {
+    @apply bg-amber-50 text-charcoal-900 font-sans antialiased;
     text-rendering: optimizeLegibility;
+    background: fixed;
   }
 
   /* Prefer language-appropriate faces while keeping Inter as Latin/Cyrillic fallback */
@@ -67,11 +73,12 @@
   .heading-eyebrow {
     @apply mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-gold-500;
   }
-
   .card-luxury {
-    @apply overflow-hidden rounded-2xl bg-white shadow-[0_2px_20px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)];
+    background-color: #ffffff; /* لون خلفية الكارت */
+    border: 1px solid #d1d5db; /* خط الإطار (رمادي وواضح) */
+    border-radius: 1rem;       /* انحناء الزوايا */
+    overflow: hidden;
   }
-
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -116,3 +123,16 @@
     transform: none;
   }
 }
+
+@layer utilities {
+  /* فئة مخصصة لإخفاء شريط التمرير بشكل متوافق */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+

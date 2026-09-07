@@ -6,6 +6,7 @@ import { t } from '@/lib/i18n/locale';
 
 export function ProjectsView({ locale, content }: { locale: AppLocale; content: SiteContent }) {
   const visible = content.projects.filter((p) => p.visible);
+  
   return (
     <>
       <PageHero
@@ -21,6 +22,7 @@ export function ProjectsView({ locale, content }: { locale: AppLocale; content: 
             projects={visible.map((p) => ({
               slug: p.slug,
               title: t(p.title, locale),
+              description: t(p.description, locale), // تم إضافة الوصف هنا لعرضه داخل البطاقات
               category: p.category,
               image: p.images[0],
             }))}

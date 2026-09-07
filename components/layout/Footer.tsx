@@ -1,11 +1,12 @@
 'use client';
 
-import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, MapPin, MessageCircle, Sparkles, Code2 } from 'lucide-react';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { BrandLockup } from '@/components/layout/BrandLockup';
 import { useSite } from '@/components/providers/SiteProvider';
 import { LAZACORE, LOCALES, LOCALE_META } from '@/lib/constants';
-import { getMailtoLink, getTelLink, getWhatsAppLink } from '@/lib/contact';
+import { getMailtoLink, getWhatsAppLink } from '@/lib/contact';
 import { t } from '@/lib/i18n/locale';
 import { getSiteNavLinks } from '@/lib/nav';
 
@@ -15,6 +16,9 @@ export function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // تعيين مسار الشعار الجديد بحرف N المباشر من مجلد public
+  const logo = '/logo-N.png';
+
   const navLinks = getSiteNavLinks(nav, {
     showMaterials: chrome.showMaterials,
     showTestimonials: chrome.showTestimonials,
@@ -22,51 +26,79 @@ export function Footer() {
     showFaq: chrome.showFaq,
   });
 
-  const whatsapp = getWhatsAppLink(settings.whatsappE164, t(settings.whatsappMessage, locale));
-  const tel = getTelLink(settings.phoneTel);
+  const whatsapp = getWhatsAppLink(
+    settings.whatsappE164,
+    t(settings.whatsappMessage, locale)
+  );
 
   return (
-    <footer className="bg-charcoal-950 text-warm-50">
-      <div className="border-b border-charcoal-800">
+    <footer className="relative bg-charcoal-950 text-warm-50 overflow-hidden border-t border-gold-500/20">
+      {/* خلفية التوهج الذهبي الضوئية */}
+      <div className="absolute inset-0 pointer-events-none opacity-10">
+        <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-gold-400 blur-3xl" />
+        <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-gold-500 blur-3xl" />
+      </div>
+
+      {/* قسم الدعوة للعمل Call To Action العلوي */}
+      <div className="border-b border-charcoal-800/80 relative z-10">
         <div className="container-luxury flex flex-col items-start justify-between gap-6 py-12 sm:py-16 lg:flex-row lg:items-center">
           <div>
-            <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl">{ui.footerCta}</h2>
-            <p className="mt-2 text-base text-warm-50/70 sm:text-lg">{chrome.ctaSubtitle}</p>
+            <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl text-white tracking-wide">
+              {ui.footerCta}
+            </h2>
+            <p className="mt-2 text-base text-warm-50/70 sm:text-lg font-light">
+              {chrome.ctaSubtitle}
+            </p>
           </div>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="btn-whatsapp">
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:from-gold-600 hover:to-gold-700 hover:shadow-gold-500/20 active:scale-[0.99]"
+            >
               <MessageCircle className="h-5 w-5" />
-              {nav.whatsapp}
-            </a>
-            <a href={tel} className="btn-gold" dir="ltr">
-              <Phone className="h-5 w-5" />
-              {nav.callUs}
+              <span>{nav.whatsapp}</span>
             </a>
           </div>
         </div>
       </div>
 
-      <div className="container-luxury grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-12 lg:py-16">
-        <div>
-          <BrandLockup
-            logoUrl={settings.logoDarkUrl}
-            brandName={settings.brandName}
-            variant="dark"
-          />
-          <p className="mt-4 text-sm leading-relaxed text-warm-50/60">{ui.footerTagline}</p>
-          <p className="mt-2 text-sm text-gold-300">{t(settings.pillars, locale)}</p>
+      {/* المحتوى الرئيسي للفوتر */}
+      <div className="container-luxury relative z-10 grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-12 lg:py-16">
+        
+        {/* العمود الأول: الهوية وشعار الماركة الجديد */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center transition-transform duration-300 hover:scale-105">
+            <BrandLockup
+              logoUrl={logo}
+              brandName={settings.brandName}
+              variant="dark"
+            />
+          </div>
+          <p className="text-sm leading-relaxed text-warm-50/70 font-light">
+            {ui.footerTagline}
+          </p>
+          {settings.pillars && (
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold-500/30 bg-gold-500/10 px-3 py-1 text-xs font-semibold text-gold-300">
+              <Sparkles className="h-3 w-3 text-gold-400" />
+              <span>{t(settings.pillars, locale)}</span>
+            </div>
+          )}
         </div>
 
+        {/* العمود الثاني: الخدمات */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gold-300">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-gold-400 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
             {ui.servicesTitle}
           </h3>
-          <ul className="space-y-3">
+          <ul className="space-y-2.5">
             {chrome.services.map((s) => (
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="text-sm text-warm-50/60 transition hover:text-warm-50"
+                  className="text-sm text-warm-50/60 transition-colors duration-300 hover:text-gold-300"
                 >
                   {s.title}
                 </Link>
@@ -75,14 +107,19 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* العمود الثالث: روابط التنقل الفعالة */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gold-300">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-gold-400 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
             {ui.navTitle}
           </h3>
-          <ul className="space-y-3">
+          <ul className="space-y-2.5">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-warm-50/60 transition hover:text-warm-50">
+                <Link
+                  href={link.href}
+                  className="text-sm text-warm-50/60 transition-colors duration-300 hover:text-gold-300"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -90,37 +127,64 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* العمود الرابع: التواصل، الـ QR Code، ومبدل اللغات */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gold-300">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-gold-400 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
             {ui.contactTitle}
           </h3>
-          <ul className="space-y-4 text-sm text-warm-50/60">
+          
+          <ul className="space-y-3 text-sm text-warm-50/70">
             <li className="flex items-start gap-3">
-              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-gold-300" />
-              <a href={tel} className="hover:text-warm-50" dir="ltr">
-                {settings.phoneDisplay}
-              </a>
-            </li>
-            <li className="flex items-start gap-3">
-              <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-gold-300" />
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-warm-50">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-gold-500/20 bg-gold-500/10 text-gold-400 shrink-0">
+                <MessageCircle className="h-3.5 w-3.5" />
+              </div>
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors duration-300 hover:text-gold-300"
+              >
                 {nav.whatsapp}
               </a>
             </li>
+            
             <li className="flex items-start gap-3">
-              <Mail className="mt-0.5 h-5 w-5 shrink-0 text-gold-300" />
-              <a href={getMailtoLink(settings.email)} className="break-all hover:text-warm-50">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-gold-500/20 bg-gold-500/10 text-gold-400 shrink-0">
+                <Mail className="h-3.5 w-3.5" />
+              </div>
+              <a
+                href={getMailtoLink(settings.email)}
+                className="break-all transition-colors duration-300 hover:text-gold-300"
+              >
                 {settings.email}
               </a>
             </li>
+
             <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gold-300" />
-              <span>{t(settings.address, locale)}</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-gold-500/20 bg-gold-500/10 text-gold-400 shrink-0 mt-0.5">
+                <MapPin className="h-3.5 w-3.5" />
+              </div>
+              <span className="leading-relaxed">{t(settings.address, locale)}</span>
             </li>
           </ul>
 
-          <div className="mt-6">
-            <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gold-300">
+          {/* صورة الـ QR Code الفاخرة */}
+          <div className="mt-5 flex flex-col items-start gap-2">
+            <div className="overflow-hidden rounded-xl border border-gold-500/30 bg-white/95 p-2 shadow-lg backdrop-blur-md transition-transform duration-300 hover:scale-105">
+              <Image
+                src="/qr.jpg"
+                alt="WhatsApp QR Code"
+                width={100}
+                height={100}
+                className="h-20 w-20 object-contain"
+              />
+            </div>
+          </div>
+
+          {/* مبدل اللغات الفاخر */}
+          <div className="mt-6 pt-4 border-t border-charcoal-800">
+            <h4 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-gold-400">
               {ui.languagesTitle}
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -129,10 +193,10 @@ export function Footer() {
                   key={code}
                   type="button"
                   onClick={() => router.replace(pathname, { locale: code })}
-                  className={`min-h-9 rounded-lg px-3 py-1.5 text-xs font-medium transition ${
+                  className={`min-h-8 rounded-lg px-3 py-1 text-xs font-bold transition-all duration-300 ${
                     locale === code
-                      ? 'bg-gold-400 text-charcoal-900'
-                      : 'bg-charcoal-800 text-warm-50/60 hover:text-warm-50'
+                      ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-white shadow-md shadow-gold-500/20'
+                      : 'border border-charcoal-800 bg-charcoal-900 text-warm-50/60 hover:border-gold-500/40 hover:text-warm-50'
                   }`}
                 >
                   {LOCALE_META[code].label}
@@ -140,26 +204,35 @@ export function Footer() {
               ))}
             </div>
           </div>
+
         </div>
+
       </div>
 
-      {/* LazaCore credit is hardcoded — not editable in Sanity */}
-      <div className="border-t border-charcoal-800">
-        <div className="container-luxury flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
-          <p className="text-sm text-warm-50/40">
-            © {new Date().getFullYear()} {settings.brandName}
-          </p>
-          <p className="text-sm text-warm-50/40">
-            {ui.madeBy}{' '}
-            <a
-              href={LAZACORE.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold-300 transition hover:text-gold-200"
-            >
-              {LAZACORE.name}
-            </a>
-          </p>
+      {/* الشريط السفلي للحقوق وتوقيع المطور المميز */}
+      <div className="border-t border-charcoal-800/80 relative z-10 bg-charcoal-950/80">
+        <div className="container-luxury flex flex-col items-center justify-between gap-4 py-6 text-xs text-warm-50/50 sm:flex-row">
+          <p>© {new Date().getFullYear()} {settings.brandName}. جميع الحقوق محفوظة.</p>
+          
+          {/* شارة Lazacore الفاخرة المضيئة */}
+          <a
+            href={LAZACORE.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-gradient-to-r from-gold-500/15 via-gold-400/5 to-transparent px-4 py-1.5 shadow-sm transition-all duration-500 hover:border-gold-400 hover:bg-gold-500/20 hover:shadow-lg hover:shadow-gold-500/20 active:scale-95"
+          >
+            <span className="text-warm-50/70 transition-colors duration-300 group-hover:text-warm-50">
+              {ui.madeBy}
+            </span>
+
+            <div className="flex items-center gap-1.5 font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-gold-200 group-hover:from-gold-200 group-hover:to-gold-400">
+              <Code2 className="h-3.5 w-3.5 text-gold-400 transition-transform duration-300 group-hover:rotate-12" />
+              <span>{LAZACORE.name}</span>
+            </div>
+
+            {/* توهج سفلي دقيق عند التحويم */}
+            <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          </a>
         </div>
       </div>
     </footer>
