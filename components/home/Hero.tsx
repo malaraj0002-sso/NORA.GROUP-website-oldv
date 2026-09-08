@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { MessageCircle, Phone } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { HERO_VIDEO_POSTER, HERO_VIDEO_SRC } from '@/lib/content/images';
@@ -14,9 +14,7 @@ export function Hero({
   pillars,
   slides,
   whatsapp,
-  tel,
   whatsappLabel,
-  callLabel,
   viewWorkLabel,
 }: {
   title: string;
@@ -24,9 +22,7 @@ export function Hero({
   pillars: string;
   slides: string[];
   whatsapp: string;
-  tel: string;
   whatsappLabel: string;
-  callLabel: string;
   viewWorkLabel: string;
 }) {
   const reduceMotion = useReducedMotion();
@@ -182,16 +178,6 @@ export function Hero({
           >
             <MessageCircle className="h-5 w-5" />
             {whatsappLabel}
-          </motion.a>
-          <motion.a
-            href={tel}
-            className="btn-gold"
-            dir="ltr"
-            whileHover={reduceMotion ? undefined : { scale: 1.03, y: -2 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-          >
-            <Phone className="h-5 w-5" />
-            {callLabel}
           </motion.a>
           <Link
             href="/projects"
