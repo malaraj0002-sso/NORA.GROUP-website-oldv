@@ -2,14 +2,20 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
-import { Inter, Noto_Kufi_Arabic, Noto_Sans_Hebrew } from 'next/font/google';
+import { Cairo, Inter, Noto_Sans_Hebrew } from 'next/font/google';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
 import { SiteProvider } from '@/components/providers/SiteProvider';
 import { toChrome } from '@/lib/content/chrome';
 import { getSiteContent } from '@/lib/content/getContent';
-import { DEFAULT_LOCALE, LOCALES, LOCALE_META, SITE_URL, type AppLocale } from '@/lib/constants';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_META,
+  SITE_URL,
+  type AppLocale,
+} from '@/lib/constants';
 import { isAppLocale } from '@/lib/i18n/locale';
 import { t } from '@/lib/i18n/locale';
 import '../globals.css';
@@ -19,15 +25,18 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
 });
+
 const notoHebrew = Noto_Sans_Hebrew({
   subsets: ['hebrew'],
   variable: '--font-noto-hebrew',
   display: 'swap',
 });
-const notoArabic = Noto_Kufi_Arabic({
+
+const cairo = Cairo({
   subsets: ['arabic'],
-  variable: '--font-noto-arabic',
+  variable: '--font-cairo',
   display: 'swap',
+  weight: ['300', '400', '600', '700'],
 });
 
 export function generateStaticParams() {
@@ -66,22 +75,30 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale: raw } = await params;
+
   if (!isAppLocale(raw)) notFound();
+
   const locale = raw as AppLocale;
 
   setRequestLocale(locale);
+
   const messages = await getMessages();
   const content = await getSiteContent();
   const dir = LOCALE_META[locale].dir;
+
   const fontClass =
     locale === 'he'
       ? `${inter.variable} ${notoHebrew.variable}`
       : locale === 'ar'
-        ? `${inter.variable} ${notoArabic.variable}`
+        ? cairo.variable
         : inter.variable;
 
   return (
-    <html lang={LOCALE_META[locale].htmlLang} dir={dir} className={fontClass}>
+    <html
+      lang={LOCALE_META[locale].htmlLang}
+      dir={dir}
+      className={fontClass}
+    >
       <body className="min-h-screen overflow-x-hidden">
         <NextIntlClientProvider messages={messages}>
           <SiteProvider chrome={toChrome(content, locale)}>
