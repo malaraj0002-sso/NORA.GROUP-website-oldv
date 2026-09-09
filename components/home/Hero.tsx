@@ -3,10 +3,18 @@
 import Image from 'next/image';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
-import { HERO_VIDEO_POSTER, HERO_VIDEO_SRC } from '@/lib/content/images';
+import { HERO_VIDEO_POSTER } from '@/lib/content/images';
 import { mediaSrc } from '@/lib/content/media';
+
+const FALLBACK_SLIDES = [
+  HERO_VIDEO_POSTER,
+  '/hero-1.jpg',
+  '/hero-2.jpg',
+  '/hero-3.jpg',
+  '/hero-4.jpg',
+];
 
 export function Hero({
   title,
@@ -26,47 +34,19 @@ export function Hero({
   viewWorkLabel: string;
 }) {
   const reduceMotion = useReducedMotion();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const safeSlides = slides.length > 0 ? slides : [HERO_VIDEO_POSTER];
 
-  const [slide, setSlide] = useState(0);
-  const [videoOk, setVideoOk] = useState(false);
-  const [loadVideo, setLoadVideo] = useState(false);
+  const rawSlides = slides && slides.length > 0 ? slides : FALLBACK_SLIDES;
+  const activeSlides = rawSlides.map((s) => mediaSrc(s));
 
-  useEffect(() => {
-    if (reduceMotion || videoOk || safeSlides.length < 2) return;
-    const id = window.setInterval(() => {
-      setSlide((i) => (i + 1) % safeSlides.length);
-    }, 6000);
-    return () => window.clearInterval(id);
-  }, [reduceMotion, videoOk, safeSlides.length]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    if (reduceMotion) return;
-    let cancelled = false;
-    const timer = window.setTimeout(() => {
-      if (!cancelled) setLoadVideo(true);
-    }, 900);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
-    };
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    if (reduceMotion || !loadVideo) return;
-    const el = videoRef.current;
-    if (!el) return;
-    const tryPlay = async () => {
-      try {
-        await el.play();
-        setVideoOk(true);
-      } catch {
-        // Autoplay blocked or missing file — Ken Burns stills stay visible
-      }
-    };
-    void tryPlay();
-  }, [reduceMotion, loadVideo]);
+    if (reduceMotion || activeSlides.length < 2) return;
+    const timer = window.setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [reduceMotion, activeSlides.length]);
 
   const fadeUp = (delay: number) =>
     reduceMotion
@@ -77,93 +57,57 @@ export function Hero({
           transition: { duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] as const },
         };
 
-  const poster = mediaSrc(videoOk ? safeSlides[0] : safeSlides[slide]);
-
   return (
-    <section className="relative flex min-h-[88vh] items-end overflow-hidden pb-16 pt-28 sm:min-h-screen sm:pb-24 sm:pt-32">
+    <section className="relative flex min-h-[88vh] items-end overflow-hidden pb-16 pt-28 sm:min-h-screen sm:pb-24 sm:pt-32 bg-charcoal-950">
+      
+      {/* خلفية السلايدر بألوان الصور الأصلية 100% */}
       <div className="pointer-events-none absolute inset-0">
         <AnimatePresence mode="sync">
           <motion.div
-            key={videoOk ? 'poster-static' : poster}
+            key={activeSlides[currentSlide]}
             className="absolute inset-0"
-            initial={reduceMotion || videoOk ? false : { opacity: 0, scale: 1.08 }}
-            animate={{ opacity: 1, scale: videoOk || reduceMotion ? 1 : 1.12 }}
-            exit={reduceMotion || videoOk ? undefined : { opacity: 0 }}
-            transition={{
-              opacity: { duration: 1.2, ease: 'easeInOut' },
-              scale: { duration: videoOk ? 0.01 : 7, ease: 'linear' },
-            }}
+            initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: 1.4, ease: 'easeInOut' }}
           >
             <Image
-              src={poster}
-              alt=""
+              src={activeSlides[currentSlide]}
+              alt={`Hero Slide ${currentSlide + 1}`}
               fill
-              priority
-              className="object-cover"
+              priority={currentSlide === 0}
+              className="object-cover object-center"
               sizes="100vw"
             />
           </motion.div>
         </AnimatePresence>
 
-        {!reduceMotion && loadVideo && (
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={
-              videoOk
-                ? { opacity: 1, scale: [1, 1.05, 1] }
-                : { opacity: 0, scale: 1.04 }
-            }
-            transition={
-              videoOk
-                ? { opacity: { duration: 1.2 }, scale: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }
-                : { duration: 1.2 }
-            }
-          >
-            <video
-              ref={videoRef}
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={HERO_VIDEO_POSTER}
-              aria-hidden
-              onCanPlay={() => setVideoOk(true)}
-              onPlaying={() => setVideoOk(true)}
-              onError={() => setVideoOk(false)}
-            >
-              <source src={HERO_VIDEO_SRC} type="video/mp4" />
-            </video>
-          </motion.div>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-charcoal-950/55 to-charcoal-950/25" />
-        <motion.div
-          className="absolute inset-0 bg-charcoal-950/20"
-          initial={reduceMotion ? false : { opacity: 0.4 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 2.2 }}
-        />
+        {/* تعتيم خفيف جداً يغطي فقط المنطقة السفلى خلف النصوص دون التغطية على ألوان باقي الصورة */}
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/70 via-charcoal-950/20 to-transparent" />
       </div>
 
+      {/* المحتوى النصي مع حماية الوضوح عبر drop-shadow */}
       <div className="container-luxury relative z-10 max-w-4xl">
         <motion.p
-          className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-gold-300"
+          className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-gold-300 drop-shadow"
           {...fadeUp(0.08)}
         >
           {pillars}
         </motion.p>
-        <motion.h1 className="text-hero font-bold text-balance text-warm-50" {...fadeUp(0.2)}>
+        <motion.h1 
+          className="text-hero font-bold text-balance text-warm-50 drop-shadow-md" 
+          {...fadeUp(0.2)}
+        >
           {title}
         </motion.h1>
         <motion.p
-          className="mt-5 max-w-2xl text-base text-warm-50/85 sm:text-lg lg:text-xl"
+          className="mt-5 max-w-2xl text-base text-warm-50 sm:text-lg lg:text-xl drop-shadow"
           {...fadeUp(0.34)}
         >
           {subtitle}
         </motion.p>
+
+        {/* أزرار الدعوة للعمل */}
         <motion.div
           className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           {...fadeUp(0.48)}
@@ -172,7 +116,7 @@ export function Hero({
             href={whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-whatsapp"
+            className="btn-whatsapp shadow-md"
             whileHover={reduceMotion ? undefined : { scale: 1.03, y: -2 }}
             whileTap={reduceMotion ? undefined : { scale: 0.98 }}
           >
@@ -181,11 +125,29 @@ export function Hero({
           </motion.a>
           <Link
             href="/projects"
-            className="btn-secondary border-warm-50 text-warm-50 hover:bg-warm-50 hover:text-charcoal-900"
+            className="btn-secondary border-warm-50 text-warm-50 hover:bg-warm-50 hover:text-charcoal-900 shadow-md"
           >
             {viewWorkLabel}
           </Link>
         </motion.div>
+
+        {/* مؤشرات التنقل بين الصور (Dots) */}
+        {activeSlides.length > 1 && (
+          <div className="mt-12 flex items-center gap-2">
+            {activeSlides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-500 pointer-events-auto ${
+                  idx === currentSlide
+                    ? 'w-8 bg-gold-400'
+                    : 'w-2 bg-warm-50/50 hover:bg-warm-50/80'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
