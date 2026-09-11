@@ -5,12 +5,12 @@ import { defineField, defineType } from 'sanity';
  */
 export const localeString = defineType({
   name: 'localeString',
-  title: 'טקסט רב־לשוני',
+  title: 'نص متعدد اللغات',
   type: 'object',
   fields: [
     defineField({
       name: 'he',
-      title: 'עברית *',
+      title: 'العبرية *',
       type: 'string',
       validation: (Rule) => Rule.required().max(200),
     }),
@@ -22,12 +22,12 @@ export const localeString = defineType({
 
 export const localeText = defineType({
   name: 'localeText',
-  title: 'פסקה רב־לשונית',
+  title: 'فقرة متعددة اللغات',
   type: 'object',
   fields: [
     defineField({
       name: 'he',
-      title: 'עברית *',
+      title: 'العبرية *',
       type: 'text',
       rows: 4,
       validation: (Rule) => Rule.required().max(2000),
