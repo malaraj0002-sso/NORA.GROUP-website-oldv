@@ -178,6 +178,7 @@ export interface SiteContent {
       contactTitle: string;
       languagesTitle: string;
       madeBy: string;
+      allRightsReserved: string;
       notFoundTitle: string;
       notFoundBody: string;
       relatedProjects: string;

@@ -5,15 +5,15 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
-import { HERO_VIDEO_POSTER } from '@/lib/content/images';
+import { images } from '@/lib/content/images';
 import { mediaSrc } from '@/lib/content/media';
 
 const FALLBACK_SLIDES = [
-  HERO_VIDEO_POSTER,
-  '/hero-1.jpg',
-  '/hero-2.jpg',
-  '/hero-3.jpg',
-  '/hero-4.jpg',
+  images.hero1,
+  images.hero2,
+  images.hero3,
+  images.kitchen2,
+  images.wardrobe1,
 ];
 
 export function Hero({
@@ -36,9 +36,13 @@ export function Hero({
   const reduceMotion = useReducedMotion();
 
   const rawSlides = slides && slides.length > 0 ? slides : FALLBACK_SLIDES;
-  const activeSlides = rawSlides.map((s) => mediaSrc(s));
+  const activeSlides = rawSlides.map((s) => mediaSrc(s)).filter(Boolean);
 
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    setCurrentSlide((prev) => (prev >= activeSlides.length ? 0 : prev));
+  }, [activeSlides.length]);
 
   useEffect(() => {
     if (reduceMotion || activeSlides.length < 2) return;
@@ -47,6 +51,8 @@ export function Hero({
     }, 5000);
     return () => window.clearInterval(timer);
   }, [reduceMotion, activeSlides.length]);
+
+  const slideSrc = activeSlides[currentSlide] ?? activeSlides[0];
 
   const fadeUp = (delay: number) =>
     reduceMotion
@@ -64,21 +70,23 @@ export function Hero({
       <div className="pointer-events-none absolute inset-0">
         <AnimatePresence mode="sync">
           <motion.div
-            key={activeSlides[currentSlide]}
+            key={slideSrc}
             className="absolute inset-0"
             initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0 }}
             transition={{ duration: 1.4, ease: 'easeInOut' }}
           >
-            <Image
-              src={activeSlides[currentSlide]}
-              alt={`Hero Slide ${currentSlide + 1}`}
-              fill
-              priority={currentSlide === 0}
-              className="object-cover object-center"
-              sizes="100vw"
-            />
+            {slideSrc ? (
+              <Image
+                src={slideSrc}
+                alt=""
+                fill
+                priority={currentSlide === 0}
+                className="object-cover object-center"
+                sizes="100vw"
+              />
+            ) : null}
           </motion.div>
         </AnimatePresence>
 

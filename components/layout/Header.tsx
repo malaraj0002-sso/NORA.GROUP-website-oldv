@@ -48,9 +48,9 @@ export function Header() {
   }, [menuOpen]);
 
   const whatsapp = getWhatsAppLink(settings.whatsappE164, t(settings.whatsappMessage, locale));
-  
-  // الشعار الجديد
-  const logo = '/logo-N.png';
+  const logo =
+    (transparent || menuOpen ? settings.logoDarkUrl || settings.logoUrl : settings.logoUrl) ||
+    '/logo.jpg';
 
   const linkClass = (href: string) =>
     `relative z-10 whitespace-nowrap rounded-lg px-2.5 py-2.5 text-sm font-semibold transition-colors xl:px-3.5 xl:text-base ${

@@ -90,7 +90,7 @@ export default async function LocaleLayout({
     locale === 'he'
       ? `${inter.variable} ${notoHebrew.variable}`
       : locale === 'ar'
-        ? cairo.variable
+        ? `${inter.variable} ${cairo.variable}`
         : inter.variable;
 
   return (

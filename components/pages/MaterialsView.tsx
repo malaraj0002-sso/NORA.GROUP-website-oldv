@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import { Sparkles, Layers, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';

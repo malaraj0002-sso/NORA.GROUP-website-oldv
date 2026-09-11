@@ -1,5 +1,3 @@
-'use client';
-
 import { Compass, Home } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { Reveal } from '@/components/ui/Reveal';

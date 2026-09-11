@@ -16,8 +16,7 @@ export function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // تعيين مسار الشعار الجديد بحرف N المباشر من مجلد public
-  const logo = '/logo-N.png';
+  const logo = settings.logoDarkUrl || settings.logoUrl || '/logo.jpg';
 
   const navLinks = getSiteNavLinks(nav, {
     showMaterials: chrome.showMaterials,
@@ -173,7 +172,7 @@ export function Footer() {
           <div className="mt-5 flex flex-col items-start gap-2">
             <div className="overflow-hidden rounded-xl border border-gold-500/30 bg-white/95 p-2 shadow-lg backdrop-blur-md transition-transform duration-300 hover:scale-105">
               <Image
-                src="/qr.jpg"
+                src={settings.qrUrl || '/qr.jpg'}
                 alt="WhatsApp QR Code"
                 width={100}
                 height={100}
@@ -212,7 +211,9 @@ export function Footer() {
       {/* الشريط السفلي للحقوق وتوقيع المطور المميز */}
       <div className="border-t border-charcoal-800/80 relative z-10 bg-charcoal-950/80">
         <div className="container-luxury flex flex-col items-center justify-between gap-4 py-6 text-xs text-warm-50/50 sm:flex-row">
-          <p>© {new Date().getFullYear()} {settings.brandName}. جميع الحقوق محفوظة.</p>
+          <p>
+            © {new Date().getFullYear()} {settings.brandName}. {ui.allRightsReserved}
+          </p>
           
           {/* شارة Lazacore الفاخرة المضيئة */}
           <a

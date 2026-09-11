@@ -310,6 +310,7 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
         notFoundBody: doc.notFoundBody || base.ui[locale].notFoundBody,
         relatedProjects: doc.relatedProjects || base.ui[locale].relatedProjects,
         madeBy: base.ui[locale].madeBy,
+        allRightsReserved: base.ui[locale].allRightsReserved,
         demoNotice: base.ui[locale].demoNotice,
       };
     }

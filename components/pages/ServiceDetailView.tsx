@@ -1,5 +1,3 @@
-'use client';
-
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/ui/PageHero';

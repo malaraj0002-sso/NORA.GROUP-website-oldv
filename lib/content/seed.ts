@@ -385,7 +385,13 @@ export const seedContent: SiteContent = {
       'Напишите нам в WhatsApp или позвоните — будем рады проконсультировать вас',
     ),
 
-    heroImages: [images.hero1, images.hero2, images.hero3],
+    heroImages: [
+      images.hero1,
+      images.hero2,
+      images.hero3,
+      images.kitchen2,
+      images.wardrobe1,
+    ],
 
     servicesEyebrow: L(
       'השירותים שלנו',
@@ -1914,6 +1920,7 @@ export const seedContent: SiteContent = {
       contactTitle: 'יצירת קשר',
       languagesTitle: 'שפות',
       madeBy: 'פותח על ידי',
+      allRightsReserved: 'כל הזכויות שמורות',
       notFoundTitle: 'העמוד לא נמצא',
       notFoundBody: 'ייתכן שהקישור שגוי או שהעמוד הוסר.',
       relatedProjects: 'פרויקטים קשורים',
@@ -1928,6 +1935,7 @@ export const seedContent: SiteContent = {
       contactTitle: 'تواصل معنا',
       languagesTitle: 'اللغات',
       madeBy: 'تنفيذ',
+      allRightsReserved: 'جميع الحقوق محفوظة',
       notFoundTitle: 'الصفحة غير موجودة',
       notFoundBody: 'قد يكون الرابط غير صحيح أو تمت إزالة الصفحة.',
       relatedProjects: 'مشاريع ذات صلة',
@@ -1942,6 +1950,7 @@ export const seedContent: SiteContent = {
       contactTitle: 'Contact Us',
       languagesTitle: 'Languages',
       madeBy: 'Developed by',
+      allRightsReserved: 'All rights reserved',
       notFoundTitle: 'Page Not Found',
       notFoundBody: 'The link may be incorrect or the page may have been removed.',
       relatedProjects: 'Related Projects',
@@ -1956,6 +1965,7 @@ export const seedContent: SiteContent = {
       contactTitle: 'Связаться с нами',
       languagesTitle: 'Языки',
       madeBy: 'Разработано',
+      allRightsReserved: 'Все права защищены',
       notFoundTitle: 'Страница не найдена',
       notFoundBody: 'Возможно, ссылка неверна или страница была удалена.',
       relatedProjects: 'Похожие проекты',
