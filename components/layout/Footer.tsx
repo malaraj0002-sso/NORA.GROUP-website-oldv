@@ -7,6 +7,7 @@ import { BrandLockup } from '@/components/layout/BrandLockup';
 import { useSite } from '@/components/providers/SiteProvider';
 import { LAZACORE, LOCALES, LOCALE_META } from '@/lib/constants';
 import { getMailtoLink, getWhatsAppLink } from '@/lib/contact';
+import { logoSrc, mediaSrc } from '@/lib/content/media';
 import { t } from '@/lib/i18n/locale';
 import { getSiteNavLinks } from '@/lib/nav';
 
@@ -16,7 +17,7 @@ export function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const logo = settings.logoDarkUrl || settings.logoUrl || '/logo.jpg';
+  const logo = logoSrc(settings.logoDarkUrl || settings.logoUrl);
 
   const navLinks = getSiteNavLinks(nav, {
     showMaterials: chrome.showMaterials,
@@ -172,7 +173,7 @@ export function Footer() {
           <div className="mt-5 flex flex-col items-start gap-2">
             <div className="overflow-hidden rounded-xl border border-gold-500/30 bg-white/95 p-2 shadow-lg backdrop-blur-md transition-transform duration-300 hover:scale-105">
               <Image
-                src={settings.qrUrl || '/qr.jpg'}
+                src={mediaSrc(settings.qrUrl, '/qr.jpg')}
                 alt="WhatsApp QR Code"
                 width={100}
                 height={100}

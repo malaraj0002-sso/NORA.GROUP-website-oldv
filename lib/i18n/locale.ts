@@ -6,6 +6,15 @@ export function isAppLocale(value: string): value is AppLocale {
   return (LOCALES as readonly string[]).includes(value);
 }
 
+export function isSafeSlug(slug: string): boolean {
+  return (
+    typeof slug === 'string' &&
+    slug.length > 0 &&
+    slug.length <= 120 &&
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(slug)
+  );
+}
+
 export function parseLocale(value: string | undefined): AppLocale {
   return value && isAppLocale(value) ? value : DEFAULT_LOCALE;
 }

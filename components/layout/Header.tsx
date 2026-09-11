@@ -7,6 +7,7 @@ import { BrandLockup } from '@/components/layout/BrandLockup';
 import { LanguageSelector } from '@/components/ui/LanguageSelector';
 import { useSite } from '@/components/providers/SiteProvider';
 import { getWhatsAppLink } from '@/lib/contact';
+import { logoSrc } from '@/lib/content/media';
 import { t } from '@/lib/i18n/locale';
 import { getDesktopNavLinks, getSiteNavLinks } from '@/lib/nav';
 
@@ -48,9 +49,9 @@ export function Header() {
   }, [menuOpen]);
 
   const whatsapp = getWhatsAppLink(settings.whatsappE164, t(settings.whatsappMessage, locale));
-  const logo =
-    (transparent || menuOpen ? settings.logoDarkUrl || settings.logoUrl : settings.logoUrl) ||
-    '/logo.jpg';
+  const logo = logoSrc(
+    transparent || menuOpen ? settings.logoDarkUrl || settings.logoUrl : settings.logoUrl,
+  );
 
   const linkClass = (href: string) =>
     `relative z-10 whitespace-nowrap rounded-lg px-2.5 py-2.5 text-sm font-semibold transition-colors xl:px-3.5 xl:text-base ${

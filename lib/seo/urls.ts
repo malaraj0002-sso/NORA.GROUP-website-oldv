@@ -14,8 +14,24 @@ export function absoluteUrl(locale: AppLocale, path: string): string {
 
 export function toAbsoluteAsset(src: string | undefined | null): string | undefined {
   if (!src) return undefined;
-  if (src.startsWith('http://') || src.startsWith('https://')) return src;
-  return `${SITE_URL}${src.startsWith('/') ? src : `/${src}`}`;
+  const trimmed = src.trim();
+  if (!trimmed || trimmed.startsWith('//') || /[\s<>]/.test(trimmed)) return undefined;
+  if (trimmed.startsWith('https://') || trimmed.startsWith('http://')) {
+    try {
+      const url = new URL(trimmed);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return undefined;
+      if (url.protocol === 'http:' && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
+        return undefined;
+      }
+      return url.href;
+    } catch {
+      return undefined;
+    }
+  }
+  if (trimmed.startsWith('/') && !trimmed.startsWith('//')) {
+    return `${SITE_URL}${trimmed}`;
+  }
+  return undefined;
 }
 
 export function hreflangMap(path: string): Record<string, string> {
