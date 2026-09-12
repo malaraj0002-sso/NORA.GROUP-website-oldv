@@ -2,7 +2,7 @@
 
 Use this if you are reviewing the repo, not editing marketing copy in Studio.
 
-## How to run before you review
+## How to run before you review 
 
 ```bash
 npm install
