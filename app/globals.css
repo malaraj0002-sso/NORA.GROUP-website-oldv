@@ -17,11 +17,23 @@
   }
 
   /* Language-specific fonts, with Inter for Latin / Cyrillic mixed strings */
-  html[lang='ar'] body {
+  html[lang='ar'] body,
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4,
+  html[lang='ar'] h5,
+  html[lang='ar'] h6 {
     font-family: var(--font-cairo), var(--font-inter), system-ui, sans-serif;
   }
 
-  html[lang='he'] body {
+  html[lang='he'] body,
+  html[lang='he'] h1,
+  html[lang='he'] h2,
+  html[lang='he'] h3,
+  html[lang='he'] h4,
+  html[lang='he'] h5,
+  html[lang='he'] h6 {
     font-family: var(--font-noto-hebrew), var(--font-inter), system-ui, sans-serif;
   }
 

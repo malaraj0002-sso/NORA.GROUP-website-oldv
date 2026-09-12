@@ -62,9 +62,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', '"Noto Kufi Arabic"', '"Noto Sans Hebrew"', 'system-ui', 'sans-serif'],
-        display: ['var(--font-inter)', '"Noto Kufi Arabic"', '"Noto Sans Hebrew"', 'system-ui', 'sans-serif'],
-        hebrew: ['var(--font-noto-hebrew)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        hebrew: ['var(--font-noto-hebrew)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
         arabic: ['var(--font-cairo)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       fontSize: {

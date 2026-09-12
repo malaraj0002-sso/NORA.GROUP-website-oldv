@@ -44,8 +44,8 @@ export const CONTACT_DEFAULTS = {
   whatsappE164: '972524659510',
   email: 'official.noragroup@gmail.com',
   website: 'https://officialnoragroup.com',
-  logoPath: '/logo.jpg',
-  logoDarkPath: '/logo-dark.jpg',
+  logoPath: '/logo.png',
+  logoDarkPath: '/logo.png',
   qrPath: '/qr.jpg',
 } as const;
 

@@ -17,7 +17,7 @@ export function safeJsonLd(data: unknown): string {
 
 export function localBusinessGraph(content: SiteContent, locale: AppLocale) {
   const { settings } = content;
-  const logo = toAbsoluteAsset(settings.logoUrl) ?? `${SITE_URL}/logo.jpg`;
+  const logo = toAbsoluteAsset(settings.logoUrl) ?? `${SITE_URL}/logo.png`;
 
   return {
     '@context': 'https://schema.org',

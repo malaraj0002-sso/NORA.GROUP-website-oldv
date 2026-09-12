@@ -34,7 +34,7 @@ const notoHebrew = Noto_Sans_Hebrew({
 });
 
 const cairo = Cairo({
-  subsets: ['arabic'],
+  subsets: ['arabic', 'latin'],
   variable: '--font-cairo',
   display: 'swap',
   weight: ['300', '400', '600', '700'],
@@ -98,7 +98,7 @@ export default async function LocaleLayout({
     <html
       lang={LOCALE_META[locale].htmlLang}
       dir={dir}
-      className={fontClass}
+      className={`${fontClass}${locale === 'ar' ? ' font-arabic' : locale === 'he' ? ' font-hebrew' : ''}`}
     >
       <body className="min-h-screen overflow-x-hidden">
         <NextIntlClientProvider messages={messages}>
