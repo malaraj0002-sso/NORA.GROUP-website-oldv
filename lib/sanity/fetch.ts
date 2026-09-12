@@ -243,7 +243,7 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
           : [],
         visible: s.visible !== false,
       }))
-      .filter((s) => isSafeSlug(s.slug));
+      .filter((s: { slug: string }) => isSafeSlug(s.slug));
     if (mapped.length) base.services = mapped;
   }
 
@@ -258,7 +258,7 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
         materials: Array.isArray(p.materials) ? (p.materials as string[]) : [],
         visible: p.visible !== false,
       }))
-      .filter((p) => isSafeSlug(p.slug));
+      .filter((p: { slug: string }) => isSafeSlug(p.slug));
     if (mapped.length) base.projects = mapped;
   }
 
@@ -274,7 +274,7 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
         image: (m.image as string) || imagesFallback(),
         visible: m.visible !== false,
       }))
-      .filter((m) => isSafeSlug(m.slug));
+      .filter((m: { slug: string }) => isSafeSlug(m.slug));
     if (mapped.length) base.materials = mapped;
   }
 
@@ -302,7 +302,7 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
         image: (b.image as string) || imagesFallback(),
         visible: b.visible !== false,
       }))
-      .filter((b) => isSafeSlug(b.slug));
+      .filter((b: { slug: string }) => isSafeSlug(b.slug));
     if (mapped.length) base.blogPosts = mapped;
   }
 
@@ -356,6 +356,12 @@ export async function fetchSanityContent(): Promise<SiteContent | null> {
         madeBy: base.ui[locale].madeBy,
         allRightsReserved: base.ui[locale].allRightsReserved,
         demoNotice: base.ui[locale].demoNotice,
+        privacy: base.ui[locale].privacy,
+        cookies: base.ui[locale].cookies,
+        terms: base.ui[locale].terms,
+        cookieNotice: base.ui[locale].cookieNotice,
+        cookieAccept: base.ui[locale].cookieAccept,
+        legalTitle: base.ui[locale].legalTitle,
       };
     }
   }

@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { Cairo, Inter, Noto_Sans_Hebrew } from 'next/font/google';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { CookieNotice } from '@/components/ui/CookieNotice';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
 import { SiteProvider } from '@/components/providers/SiteProvider';
 import { toChrome } from '@/lib/content/chrome';
@@ -105,6 +106,7 @@ export default async function LocaleLayout({
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />
+            <CookieNotice />
             <FloatingWhatsApp />
           </SiteProvider>
         </NextIntlClientProvider>

@@ -1,5 +1,6 @@
 import { CONTACT_DEFAULTS } from '@/lib/constants';
 import { images } from '@/lib/content/images';
+import { legalContent } from '@/lib/content/legal';
 import type { NavLabels, SiteContent } from '@/lib/content/types';
 import { L } from '@/lib/i18n/locale';
 
@@ -1911,6 +1912,8 @@ export const seedContent: SiteContent = {
     },
   ],
 
+  legal: legalContent,
+
   ui: {
     he: {
       footerCta: 'בואו ניצור יחד את הפרויקט שלכם',
@@ -1925,6 +1928,12 @@ export const seedContent: SiteContent = {
       notFoundBody: 'ייתכן שהקישור שגוי או שהעמוד הוסר.',
       relatedProjects: 'פרויקטים קשורים',
       demoNotice: '',
+      privacy: 'מדיניות פרטיות',
+      cookies: 'עוגיות',
+      terms: 'תנאי שימוש',
+      cookieNotice: 'האתר משתמש באמצעים טכניים הכרחיים בלבד. אין מעקב פרסומי.',
+      cookieAccept: 'הבנתי',
+      legalTitle: 'מידע משפטי',
     },
 
     ar: {
@@ -1940,6 +1949,12 @@ export const seedContent: SiteContent = {
       notFoundBody: 'قد يكون الرابط غير صحيح أو تمت إزالة الصفحة.',
       relatedProjects: 'مشاريع ذات صلة',
       demoNotice: '',
+      privacy: 'سياسة الخصوصية',
+      cookies: 'ملفات الارتباط',
+      terms: 'شروط الاستخدام',
+      cookieNotice: 'يستخدم الموقع وسائل تقنية ضرورية فقط. لا يوجد تتبع إعلاني.',
+      cookieAccept: 'حسنًا',
+      legalTitle: 'معلومات قانونية',
     },
 
     en: {
@@ -1955,6 +1970,12 @@ export const seedContent: SiteContent = {
       notFoundBody: 'The link may be incorrect or the page may have been removed.',
       relatedProjects: 'Related Projects',
       demoNotice: '',
+      privacy: 'Privacy Policy',
+      cookies: 'Cookies',
+      terms: 'Terms of Use',
+      cookieNotice: 'This site uses necessary technical storage only. No advertising tracking.',
+      cookieAccept: 'Got it',
+      legalTitle: 'Legal',
     },
 
     ru: {
@@ -1970,6 +1991,12 @@ export const seedContent: SiteContent = {
       notFoundBody: 'Возможно, ссылка неверна или страница была удалена.',
       relatedProjects: 'Похожие проекты',
       demoNotice: '',
+      privacy: 'Политика конфиденциальности',
+      cookies: 'Cookie',
+      terms: 'Условия использования',
+      cookieNotice: 'Сайт использует только необходимые технические средства. Рекламного отслеживания нет.',
+      cookieAccept: 'Понятно',
+      legalTitle: 'Правовая информация',
     },
   },
 };

@@ -211,10 +211,22 @@ export function Footer() {
 
       {/* الشريط السفلي للحقوق وتوقيع المطور المميز */}
       <div className="border-t border-charcoal-800/80 relative z-10 bg-charcoal-950/80">
-        <div className="container-luxury flex flex-col items-center justify-between gap-4 py-6 text-xs text-warm-50/50 sm:flex-row">
+        <div className="container-luxury flex flex-col items-center justify-between gap-4 py-6 text-xs text-warm-50/50 sm:flex-row sm:flex-wrap">
           <p>
             © {new Date().getFullYear()} {settings.brandName}. {ui.allRightsReserved}
           </p>
+
+          <nav aria-label={ui.legalTitle} className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <Link href="/privacy" className="transition-colors duration-300 hover:text-gold-300">
+              {ui.privacy}
+            </Link>
+            <Link href="/cookies" className="transition-colors duration-300 hover:text-gold-300">
+              {ui.cookies}
+            </Link>
+            <Link href="/terms" className="transition-colors duration-300 hover:text-gold-300">
+              {ui.terms}
+            </Link>
+          </nav>
           
           {/* شارة Lazacore الفاخرة المضيئة */}
           <a

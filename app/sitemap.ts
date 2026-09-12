@@ -16,6 +16,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/blog',
     '/faq',
     '/contact',
+    '/privacy',
+    '/cookies',
+    '/terms',
   ];
 
   const entityPaths = [
@@ -31,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       entries.push({
         url: absoluteUrl(locale, path),
         changeFrequency: 'weekly',
-        priority: path === '/' ? 1 : 0.7,
+        priority: path === '/' ? 1 : path === '/privacy' || path === '/cookies' || path === '/terms' ? 0.3 : 0.7,
         alternates: { languages: hreflangMap(path) },
       });
     }
